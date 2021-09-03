@@ -11,12 +11,14 @@
 void MainWindow::drawPlot() {
 
     int cDistrPoints = ui->ed_cntDistrib->text().toInt();
-    int cIter = ui->ed_cntIterDistrib->text().toInt();
-
     cDistrPoints = std::max(100, cDistrPoints);
+
+    int cIter = ui->ed_cntIterDistrib->text().toInt();
     cIter = std::max(100, cIter);
 
-    int cFractions = 30;
+    int cFractions = ui->ed_distribFractions->text().toInt();
+    cFractions = std::min(100, std::max(3, cFractions));
+
     int cWins[cFractions] = {};
     int cAll = 0;
 
@@ -66,13 +68,13 @@ void MainWindow::drawPlot() {
     double maProb = 0.;
 
     for (int ii = 0; ii < cFractions; ++ii) {
-        double p = DIV(cWins[ii], cAll);
-        double x = DIV(ii + 0.5, cFractions);
+        double p = FDIV(cWins[ii], cAll);
+        double x = FDIV(ii + 0.5, cFractions);
         points += {x, p};
 
         if (suProb + p > probCancel && probWinCancel >= 1.)
             probWinCancel =
-            DIV(ii, cFractions) +
+            FDIV(ii, cFractions) +
             1. / cFractions * (probCancel - suProb) / p;
 
         suProb += p;

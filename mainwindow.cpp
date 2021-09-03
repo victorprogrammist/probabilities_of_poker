@@ -72,6 +72,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->ed_cntIterDistrib->setValidator(&m_valid_iterate);
     ui->ed_cntIterDistrib->setText("1000");
 
+    ui->ed_distribFractions->setText("30");
+    ui->ed_distribFractions->setValidator(&m_valid_iterate);
+
     //***************************************
     ui->ed_simpleIter->setText("50000");
     ui->ed_realIter->setText("200");

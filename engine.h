@@ -12,7 +12,7 @@
 using std::function;
 
 #define DBL(X) static_cast<double>(X)
-#define DIV(X,Y) (DBL(X) / DBL(Y))
+#define FDIV(X,Y) (DBL(X) / DBL(Y))
 
 Combination getCombo(const ListCards& cards1, const ListCards& cards2);
 
@@ -36,11 +36,11 @@ struct ResProb {
 
     double probWin() const {
         if (!cAll) return 0;
-        return DIV(cWin, cAll); }
+        return FDIV(cWin, cAll); }
 
     double probLoss() const {
         if (!cAll) return 0;
-        return DIV(cLoss, cAll); }
+        return FDIV(cLoss, cAll); }
 };
 
 ResProb calcProbability(
