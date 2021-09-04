@@ -10,9 +10,9 @@ class MyPlot: public QWidget {
     QGraphicsView* m_view = nullptr;
     QGraphicsScene* m_scene = nullptr;
 
-    void resizeEvent(QResizeEvent *) override { paintPlot(); }
+    void resizeEvent(QResizeEvent *) override { repaintPlot(); }
     void paintPixmap(const QPixmap& pixmap);
-    void paintPlot();
+    void recalcRect();
 
     QPolygonF getListPoints(uint iList, int wi, int he);
 
@@ -40,7 +40,7 @@ public:
             QColor colorLine,
             QColor colorPoints);
 
-    void recalcRect();
+    void repaintPlot();
 };
 
 #endif

@@ -29,7 +29,7 @@ void MyPlot::appendPoints(
         recalcRect();
     }
 
-    QTimer::singleShot(1, [this]{ paintPlot(); });
+    QTimer::singleShot(1, [this]{ repaintPlot(); });
 }
 
 void MyPlot::recalcRect() {
@@ -68,7 +68,7 @@ QPolygonF MyPlot::getListPoints(uint iList, int wi, int he) {
     return points;
 }
 
-void MyPlot::paintPlot() {
+void MyPlot::repaintPlot() {
     if (!m_view || !m_scene) return;
 
     QRect r = m_view->contentsRect();

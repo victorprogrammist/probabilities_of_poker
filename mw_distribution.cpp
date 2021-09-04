@@ -1,5 +1,6 @@
 
 #include <QLineEdit>
+#include <QTimer>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -84,7 +85,9 @@ void MainWindow::drawPlot() {
     if (probCancel > 0.)
         plot->appendPoints(pgCancel, QColorConstants::Red);
 
-    plot->show();
+    QTimer::singleShot(1, [this,plot] {
+        plot->show();
+        plot->repaintPlot(); });
 }
 
 void MainWindow::on_bt_distribution_clicked() {
