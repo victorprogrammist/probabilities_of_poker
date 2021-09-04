@@ -1,2 +1,2 @@
 # probabilities_of_poker
-Few variants of probabilities of poker.
+A few variants of probabilities of poker.
