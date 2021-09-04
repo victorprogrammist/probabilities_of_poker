@@ -15,10 +15,7 @@ struct Distrib {
     double *arSuPoints = nullptr;
     double suAll = 0;
 
-    Distrib(int cFr)
-        : cFractions(cFr)
-        , arSuPoints(new double[cFr]) {}
-
+    Distrib(int cFr);
     ~Distrib() { delete[] arSuPoints; }
 
     double getAreaOfPoint(int iPoint) const {

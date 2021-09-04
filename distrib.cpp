@@ -1,6 +1,15 @@
 
 #include "distrib.h"
 
+Distrib::Distrib(int cFr)
+    : cFractions(cFr)
+    , arSuPoints(new double[cFr]) {
+
+    for (int ii = 0; ii < cFr; ++ii)
+        arSuPoints[ii] = 0.;
+}
+
+
 double Distrib::getDensityByProbabilityX(double pX) const {
 
     int iPos = indexFraction(pX);
