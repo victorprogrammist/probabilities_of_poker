@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "distrib.h"
 #include "engine.h"
 #include "myPlot.h"
 #include "tls.h"
@@ -19,8 +20,7 @@ void MainWindow::drawPlot() {
     int cFractions = ui->ed_distribFractions->text().toInt();
     cFractions = std::min(100, std::max(3, cFractions));
 
-    int cWins[cFractions] = {};
-    int cAll = 0;
+    Distrib distrib(cFractions);
 
     for (int iStp = 0; iStp < cDistrPoints; ++iStp) {
         Deck deck;
@@ -30,13 +30,7 @@ void MainWindow::drawPlot() {
         ResProb prob = ::calcProbability(deck, myHand, desk, {}, cIter);
 
         double p = prob.probWin();
-        int iPos = lround(floor(p * cFractions));
-
-        if (iPos < 0) iPos = 0;
-        if (iPos >= cFractions) iPos = cFractions-1;
-
-        ++cWins[iPos];
-        ++cAll;
+        distrib.addValue(p);
 
 #if 1
         if (iStp % 100 == 0)
@@ -60,34 +54,18 @@ void MainWindow::drawPlot() {
     //***************************************************************************
 
     double probCancel = getEditText(ui->ed_probCancel, "0.3").toDouble();
-    double probWinCancel = 1.;
 
-    QVector<QPointF> points;
-
-    double suProb = 0.;
-    double maProb = 0.;
-
-    for (int ii = 0; ii < cFractions; ++ii) {
-        double p = FDIV(cWins[ii], cAll);
-        double x = FDIV(ii + 0.5, cFractions);
-        points += {x, p};
-
-        if (suProb + p > probCancel && probWinCancel >= 1.)
-            probWinCancel =
-            FDIV(ii, cFractions) +
-            1. / cFractions * (probCancel - suProb) / p;
-
-        suProb += p;
-        maProb = std::max(maProb, p);
-    }
+    QVector<QPointF> points = distrib.getAllPoints();
+    double maDen = distrib.maxDensity();
+    double probWinCancel = distrib.probabilityX_byArea(probCancel);
 
     ui->lb_newProbWinCancel->setText(
     "Probability of win for cancel: "+
     fmt(probWinCancel, 2, 1));
 
     QPolygonF pgCancel;
-    pgCancel += {probWinCancel, maProb * -0.1};
-    pgCancel += {probWinCancel, maProb * 1.1};
+    pgCancel += {probWinCancel, maDen * -0.1};
+    pgCancel += {probWinCancel, maDen * 1.1};
 
     auto* plot = new MyPlot;
 
@@ -96,8 +74,8 @@ void MainWindow::drawPlot() {
     double x = 0.;
     for (int ii = 0; ii < 3; ++ii, x += 0.5) {
         QPolygonF pgOrd1;
-        pgOrd1 += {x, maProb * -0.1};
-        pgOrd1 += {x, maProb * 1.1};
+        pgOrd1 += {x, maDen * -0.1};
+        pgOrd1 += {x, maDen * 1.1};
         plot->appendPoints(pgOrd1, QColorConstants::Gray);
     }
 

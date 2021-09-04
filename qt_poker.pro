@@ -12,6 +12,7 @@ SOURCES += \
     card.cpp \
     combination.cpp \
     deck.cpp \
+    distrib.cpp \
     engine.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -22,7 +23,9 @@ HEADERS += \
     card.h \
     combination.h \
     deck.h \
+    distrib.h \
     engine.h \
+    fdiv.h \
     mainwindow.h \
     myPlot.h \
     tls.h

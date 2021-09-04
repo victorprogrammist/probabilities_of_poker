@@ -5,14 +5,12 @@
 #include "card.h"
 #include "combination.h"
 #include "deck.h"
+#include "fdiv.h"
 
 #include <functional>
 #include <QString>
 
 using std::function;
-
-#define DBL(X) static_cast<double>(X)
-#define FDIV(X,Y) (DBL(X) / DBL(Y))
 
 Combination getCombo(const ListCards& cards1, const ListCards& cards2);
 
