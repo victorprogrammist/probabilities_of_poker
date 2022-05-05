@@ -1,5 +1,6 @@
 # probabilities_of_poker
 A few variants of probabilities of poker.
+Некоторые расчеты вероятностей игры в покер.
 
 Программка к статье на хабре:
 https://habr.com/ru/post/576288/
